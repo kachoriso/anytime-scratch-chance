@@ -1,0 +1,26 @@
+{
+  "name": "paypay-scratch-chance",
+  "version": "1.0.0",
+  "description": "PayPayスクラッチチャンス体験Webアプリ",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo 'No build process needed for static site'",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "scratch",
+    "game",
+    "paypay",
+    "lottery",
+    "web-app"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+} 

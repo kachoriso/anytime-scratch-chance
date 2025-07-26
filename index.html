@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPayスクラッチチャンス</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="title">🎌 スクラッチチャンス 🎌</h1>
+            <p class="subtitle">カードを選んでスクラッチしよう！</p>
+            <div class="game-stats">
+                <div class="tap-counter">
+                    <span class="counter-label">本日のタップ回数:</span>
+                    <span id="tapCount" class="counter-value">0</span>
+                    <span id="dateDisplay" class="date-display"></span>
+                </div>
+                <div id="bonusIndicator" class="bonus-indicator"></div>
+            </div>
+        </header>
+        
+        <div class="game-board">
+            <div class="scratch-grid">
+                <div class="scratch-card" data-index="0">
+                    <div class="scratch-surface">
+                        <div class="scratch-overlay"></div>
+                        <div class="scratch-content">
+                            <span class="prize-text"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="scratch-card" data-index="1">
+                    <div class="scratch-surface">
+                        <div class="scratch-overlay"></div>
+                        <div class="scratch-content">
+                            <span class="prize-text"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="scratch-card" data-index="2">
+                    <div class="scratch-surface">
+                        <div class="scratch-overlay"></div>
+                        <div class="scratch-content">
+                            <span class="prize-text"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="scratch-card" data-index="3">
+                    <div class="scratch-surface">
+                        <div class="scratch-overlay"></div>
+                        <div class="scratch-content">
+                            <span class="prize-text"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="scratch-card" data-index="4">
+                    <div class="scratch-surface">
+                        <div class="scratch-overlay"></div>
+                        <div class="scratch-content">
+                            <span class="prize-text"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="scratch-card" data-index="5">
+                    <div class="scratch-surface">
+                        <div class="scratch-overlay"></div>
+                        <div class="scratch-content">
+                            <span class="prize-text"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="scratch-card" data-index="6">
+                    <div class="scratch-surface">
+                        <div class="scratch-overlay"></div>
+                        <div class="scratch-content">
+                            <span class="prize-text"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="scratch-card" data-index="7">
+                    <div class="scratch-surface">
+                        <div class="scratch-overlay"></div>
+                        <div class="scratch-content">
+                            <span class="prize-text"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="scratch-card" data-index="8">
+                    <div class="scratch-surface">
+                        <div class="scratch-overlay"></div>
+                        <div class="scratch-content">
+                            <span class="prize-text"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="resetBtn" class="reset-btn">🔄 もう一度遊ぶ</button>
+        </div>
+        
+        <div id="resultModal" class="modal">
+            <div class="modal-content">
+                <div class="prize-display">
+                    <div class="prize-icon"></div>
+                    <div class="prize-name"></div>
+                    <div class="prize-message"></div>
+                </div>
+                <button id="modalCloseBtn" class="modal-close">閉じる</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
