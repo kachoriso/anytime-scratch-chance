@@ -2,8 +2,8 @@ services:
   - type: web
     name: paypay-scratch-chance
     env: node
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: echo "No build needed - using Node.js built-in modules"
+    startCommand: node server-simple.js
     plan: free
     envVars:
       - key: NODE_VERSION

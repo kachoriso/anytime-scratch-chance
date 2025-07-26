@@ -4,11 +4,12 @@
   "description": "PayPayスクラッチチャンス体験Webアプリ",
   "main": "index.html",
   "scripts": {
-    "start": "node server.js",
-    "build": "echo 'Build completed - dependencies should be auto-installed by Render'",
+    "start": "node server-simple.js",
+    "start-express": "npm install && node server.js",
+    "build": "echo 'No build needed - using built-in Node.js modules'",
     "postinstall": "echo 'Dependencies installed successfully'",
     "dev": "python3 -m http.server 8000",
-    "heroku-postbuild": "npm install --production"
+    "heroku-postbuild": "echo 'No dependencies needed'"
   },
   "keywords": [
     "scratch",
@@ -19,9 +20,7 @@
   ],
   "author": "Your Name",
   "license": "MIT",
-  "dependencies": {
-    "express": "^4.18.2"
-  },
+  "dependencies": {},
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=8.0.0"
