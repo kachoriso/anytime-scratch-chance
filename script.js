@@ -239,12 +239,18 @@ class ScratchGame {
         // 当選時の特別効果
         if (card.prize.name !== 'ハズレ') {
             this.addWinEffect(card.element);
+            
+            // 当選時のみモーダルを表示
+            setTimeout(() => {
+                this.showResultModal(card.prize);
+            }, 500);
+        } else {
+            // ハズレの場合はモーダル表示せずに処理完了
+            setTimeout(() => {
+                this.isProcessing = false;
+                this.setCardsDisabled(false);
+            }, 800);
         }
-        
-        // 結果モーダルを表示
-        setTimeout(() => {
-            this.showResultModal(card.prize);
-        }, 500);
     }
     
     addWinEffect(cardElement) {
