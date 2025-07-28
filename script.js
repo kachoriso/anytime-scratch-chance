@@ -74,11 +74,11 @@ class ScratchGame {
     }
     
     getSpecialDayProbabilities() {
-        // 7月30日の超特別確率
+        // 7月30日の超特別確率（2倍に）
         return {
-            first: 0.01,    // 1/100 (1%)
-            second: 0.02,   // 1/50 (2%)
-            third: 0.1      // 1/10 (10%)
+            first: 0.02,    // 1/50 (2%)
+            second: 0.04,   // 1/25 (4%)
+            third: 0.2      // 1/5 (20%)
         };
     }
     
@@ -116,7 +116,7 @@ class ScratchGame {
         bonusIndicator.style.display = 'none';
         
         if (this.isSpecialDay()) {
-            subtitle.innerHTML = '🎆 7/30超特別日！激アツ確率開催中！🎆<br>1等:1/100 2等:1/50 3等:1/10';
+            subtitle.innerHTML = '🎆 7/30超特別日！激アツ確率開催中！🎆<br>カードを選んでスクラッチしよう！';
             subtitle.style.animation = 'goldShimmer 2s infinite';
             bonusIndicator.textContent = '🎆 7/30超特別日 激アツ確率！ 🎆';
             bonusIndicator.classList.add('bonus-3x');
