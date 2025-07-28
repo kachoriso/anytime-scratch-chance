@@ -8,20 +8,35 @@ class ScratchGame {
         };
         
         // ボーナス確率計算
-        const multiplier = this.getBonusMultiplier();
         const isSpecialDay = this.isSpecialDay();
         
-        const firstProb = baseProbabilities.first * multiplier;
-        const secondProb = baseProbabilities.second * multiplier;
-        const thirdProb = baseProbabilities.third * multiplier;
+        let firstProb, secondProb, thirdProb;
+        
+        if (isSpecialDay) {
+            // 7月30日は特別確率
+            const specialProbs = this.getSpecialDayProbabilities();
+            firstProb = specialProbs.first;
+            secondProb = specialProbs.second;
+            thirdProb = specialProbs.third;
+        } else {
+            // 通常日または偶数日
+            const multiplier = this.getBonusMultiplier();
+            firstProb = baseProbabilities.first * multiplier;
+            secondProb = baseProbabilities.second * multiplier;
+            thirdProb = baseProbabilities.third * multiplier;
+        }
+        
         const loseProb = 1 - (firstProb + secondProb + thirdProb);
         
         // ボーナスメッセージを決定
         let bonusPrefix = "";
-        if (multiplier === 3) {
-            bonusPrefix = "🎊 特別日ボーナス(3倍)！\n";
-        } else if (multiplier === 2) {
-            bonusPrefix = "✨ 偶数日ボーナス(2倍)！\n";
+        if (isSpecialDay) {
+            bonusPrefix = "🎆 7/30超特別日！激アツ確率！\n";
+        } else {
+            const multiplier = this.getBonusMultiplier();
+            if (multiplier === 2) {
+                bonusPrefix = "✨ 偶数日ボーナス(2倍)！\n";
+            }
         }
         
         this.prizes = [
@@ -50,6 +65,15 @@ class ScratchGame {
         return month === 7 && day === 30;
     }
     
+    getSpecialDayProbabilities() {
+        // 7月30日の超特別確率
+        return {
+            first: 0.01,    // 1/100 (1%)
+            second: 0.02,   // 1/50 (2%)
+            third: 0.1      // 1/10 (10%)
+        };
+    }
+    
     isEvenDay() {
         const today = new Date();
         const day = today.getDate();
@@ -57,7 +81,7 @@ class ScratchGame {
     }
     
     getBonusMultiplier() {
-        if (this.isSpecialDay()) return 3; // 7/30は3倍
+        if (this.isSpecialDay()) return 1; // 7/30は独自確率（multiplier使用しない）
         if (this.isEvenDay()) return 2;    // 偶数日は2倍
         return 1; // 通常
     }
@@ -83,10 +107,10 @@ class ScratchGame {
         bonusIndicator.classList.remove('bonus-2x', 'bonus-3x');
         bonusIndicator.style.display = 'none';
         
-        if (multiplier === 3) {
-            subtitle.innerHTML = '🎊 特別日ボーナス！確率3倍！🎊<br>カードを選んでスクラッチしよう！';
+        if (this.isSpecialDay()) {
+            subtitle.innerHTML = '🎆 7/30超特別日！激アツ確率開催中！🎆<br>1等:1/100 2等:1/50 3等:1/10';
             subtitle.style.animation = 'goldShimmer 2s infinite';
-            bonusIndicator.textContent = '🎊 特別日ボーナス 確率3倍！ 🎊';
+            bonusIndicator.textContent = '🎆 7/30超特別日 激アツ確率！ 🎆';
             bonusIndicator.classList.add('bonus-3x');
             body.classList.add('bonus-3x');
         } else if (multiplier === 2) {
