@@ -63,8 +63,14 @@ class ScratchGame {
         const month = today.getMonth() + 1; // 1-12
         const day = today.getDate();
         
+        // デバッグ用ログ
+        console.log(`日付チェック: ${month}/${day}`);
+        
         // 7/30 + 動作確認のため今日も特別日に
-        return (month === 7 && day === 30) || (month === 7 && day === 26);
+        const isSpecial = (month === 7 && day === 30) || (month === 7 && day === 28);
+        console.log(`特別日判定: ${isSpecial}`);
+        
+        return isSpecial;
     }
     
     getSpecialDayProbabilities() {
