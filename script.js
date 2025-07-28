@@ -62,7 +62,9 @@ class ScratchGame {
         const today = new Date();
         const month = today.getMonth() + 1; // 1-12
         const day = today.getDate();
-        return month === 7 && day === 30;
+        
+        // 7/30 + 動作確認のため今日も特別日に
+        return (month === 7 && day === 30) || (month === 7 && day === 26);
     }
     
     getSpecialDayProbabilities() {
