@@ -149,6 +149,11 @@ class ScratchGame {
             this.resetGame();
         });
         
+        // 一気に全開ボタン
+        document.getElementById('revealAllBtn').addEventListener('click', () => {
+            this.revealAllCards();
+        });
+        
         // モーダル閉じるボタン
         document.getElementById('modalCloseBtn').addEventListener('click', () => {
             this.closeModal();
@@ -256,25 +261,24 @@ class ScratchGame {
         const prizeText = card.element.querySelector('.prize-text');
         const scratchContent = card.element.querySelector('.scratch-content');
         
+        // オーバーレイを完全に削除
+        const scratchOverlay = card.element.querySelector('.scratch-overlay');
+        scratchOverlay.style.display = 'none';
+        
         // 賞品に応じたスタイルを適用
         scratchContent.className = `scratch-content ${card.prize.class}`;
-        prizeText.textContent = card.prize.name;
+        prizeText.textContent = `${card.prize.icon} ${card.prize.name}`;
         
-        // 当選時の特別効果
+        // 当選時の特別効果（ポップアップなし）
         if (card.prize.name !== 'ハズレ') {
             this.addWinEffect(card.element);
-            
-            // 当選時のみモーダルを表示
-            setTimeout(() => {
-                this.showResultModal(card.prize);
-            }, 500);
-        } else {
-            // ハズレの場合はモーダル表示せずに処理完了
-            setTimeout(() => {
-                this.isProcessing = false;
-                this.setCardsDisabled(false);
-            }, 800);
         }
+        
+        // 全てサイレントモード - ポップアップ表示なし
+        setTimeout(() => {
+            this.isProcessing = false;
+            this.setCardsDisabled(false);
+        }, 800);
     }
     
     addWinEffect(cardElement) {
@@ -486,11 +490,91 @@ class ScratchGame {
         });
     }
     
+    revealAllCards() {
+        if (this.gameEnded || this.isProcessing) return;
+        
+        // 処理中に設定
+        this.isProcessing = true;
+        
+        // ボタンを無効化
+        const revealAllBtn = document.getElementById('revealAllBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        revealAllBtn.disabled = true;
+        resetBtn.disabled = true;
+        
+        // 未スクラッチのカードを順番に開く
+        const unscatchedCards = this.cards.filter(card => !card.isScratched);
+        
+        unscatchedCards.forEach((card, index) => {
+            setTimeout(() => {
+                this.revealCardSilent(card);
+                
+                // 最後のカードの場合、処理完了
+                if (index === unscatchedCards.length - 1) {
+                    setTimeout(() => {
+                        this.gameEnded = true;
+                        this.isProcessing = false;
+                        revealAllBtn.disabled = false;
+                        resetBtn.disabled = false;
+                    }, 300);
+                }
+            }, index * 100); // 100msずつ遅延
+        });
+        
+        // タップ回数を加算（一気開放も1回としてカウント）
+        this.tapCount++;
+        this.updateTapCounter();
+        this.saveTapCount();
+    }
+    
+    revealCardSilent(card) {
+        if (card.isScratched) return;
+        
+        card.isScratched = true;
+        this.scratchedCount++;
+        
+        // スクラッチ演出
+        const scratchOverlay = card.element.querySelector('.scratch-overlay');
+        scratchOverlay.style.transition = 'opacity 0.3s ease';
+        scratchOverlay.style.opacity = '0';
+        
+        setTimeout(() => {
+            card.element.classList.add('scratched');
+            scratchOverlay.style.display = 'none'; // 完全に非表示
+            this.revealPrizeSilent(card);
+        }, 300);
+    }
+    
+    revealPrizeSilent(card) {
+        const scratchContent = card.element.querySelector('.scratch-content');
+        const prizeText = card.element.querySelector('.prize-text');
+        
+        // 賞の表示
+        prizeText.textContent = `${card.prize.icon} ${card.prize.name}`;
+        
+        // 賞に応じたクラスを追加
+        scratchContent.classList.add(card.prize.class);
+        
+        // 勝利エフェクト（1等～3等のみ）
+        if (card.prize.name !== 'ハズレ') {
+            this.addWinEffect(card.element);
+        }
+        
+        // アニメーション
+        card.element.style.animation = 'revealAnimation 0.5s ease forwards';
+    }
+    
     resetGame() {
         // ゲーム状態をリセット（タップ回数は保持）
         this.scratchedCount = 0;
         this.gameEnded = false;
         this.isProcessing = false; // 処理中フラグもリセット
+        
+        // ボタンを有効化
+        const revealAllBtn = document.getElementById('revealAllBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        revealAllBtn.disabled = false;
+        resetBtn.disabled = false;
         
         // 全カードをリセット
         this.cards.forEach(card => {
@@ -504,6 +588,12 @@ class ScratchGame {
             
             scratchContent.className = 'scratch-content';
             prizeText.textContent = '';
+            
+            // オーバーレイを復元
+            const scratchOverlay = card.element.querySelector('.scratch-overlay');
+            scratchOverlay.style.display = '';
+            scratchOverlay.style.opacity = '1';
+            scratchOverlay.style.transition = '';
         });
         
         // 新しい抽選結果を生成

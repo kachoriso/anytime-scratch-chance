@@ -268,6 +268,10 @@ header {
 .controls {
     text-align: center;
     margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .reset-btn {
@@ -290,6 +294,36 @@ header {
 
 .reset-btn:active {
     transform: translateY(0);
+}
+
+.reveal-all-btn {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.reveal-all-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+    background: linear-gradient(135deg, #c0392b, #a93226);
+}
+
+.reveal-all-btn:active {
+    transform: translateY(0);
+}
+
+.reveal-all-btn:disabled {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.6;
 }
 
 /* モーダル */
